@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using DataModel.Entities;
+using System.Collections.Generic;
 
 namespace Interfaces.Repositories
 {
-    public interface IOrderRepository<T> : IRepository<T> where T: class,IBaseEntity,new()
+    public interface IOrderRepository : IRepository<Order>
     {
-        List<T> Search(string firstname = default(string), string secondname = default(string), bool? SortByDate = null, int? id = 0, int? Day = 0, int? Month = 0, int? Year = 0);
+        List<Order> Search(string firstname = default(string), string secondname = default(string), bool? SortByDate = null, int? id = 0, int? Day = 0, int? Month = 0, int? Year = 0);
     }
 }

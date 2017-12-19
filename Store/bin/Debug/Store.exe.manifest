@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>c+bCuROqz4x99CTqmdmOPt1la74NyvKlXiPnh58HWyk=</dsig:DigestValue>
+        <dsig:DigestValue>uxO7s2mBoL8II2QnuoZKGTbsZpxmub8w9hTLYdjTYHc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -266,7 +266,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>cVIXYzYUYkwe8VNSTe27FAt1a6bMS0cvUTp6B9Vg7y0=</dsig:DigestValue>
+        <dsig:DigestValue>D9X0Kv09TUf23V+zHSoZsuPLD0ZyYVOjHpkTa0KdaJE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -278,7 +278,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>NpW0w0rPhOcGZDh6o3cUhmkVG1eGhRyxGEH3JPkf2vI=</dsig:DigestValue>
+        <dsig:DigestValue>sJ5dO+CdEdYpHbH2KVJw9D/VmwIz4mj0K0MgVVr36FE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -338,7 +338,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>P8xMZySAT1/X/m2DACKzUpAVQZPu63UgIU5fyygebxI=</dsig:DigestValue>
+        <dsig:DigestValue>kI57G0c6iza2JHsao68YXIfFJ+koDCxofwXa/1cwPiY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -391,14 +391,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Store.exe" size="9626112">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Store.exe" size="9626624">
       <assemblyIdentity name="Store" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>yMkxzV/tlShlyz8aTwZzxLtYilBshwePjUibLZj2iQk=</dsig:DigestValue>
+        <dsig:DigestValue>hD4GldlSJXy7Hq1XkQ0+tZUZWH8Zhm480kAlPTm1hD8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

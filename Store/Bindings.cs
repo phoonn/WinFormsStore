@@ -21,12 +21,12 @@ namespace Store
         {
             
             //Repositories
-            container.RegisterType<IOrderRepository<Order>,OrderRepository>();
-            container.RegisterType<IUserRepository<User>, UserRepository>();
-            container.RegisterType<IProductRepository<Product>, ProductRepository>();
-            container.RegisterType<IProductTypeRepository<ProductType>, ProductTypeRepository>();
-            container.RegisterType<IProviderRepository<Provider>, ProviderRepository>();
-            container.RegisterType<ISerialNumberRepository<SerialNumber>, SerialNumberRepository>();
+            container.RegisterType<IOrderRepository,OrderRepository>();
+            container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<IProductTypeRepository, ProductTypeRepository>();
+            container.RegisterType<IProviderRepository, ProviderRepository>();
+            container.RegisterType<ISerialNumberRepository, SerialNumberRepository>();
             container.RegisterType(typeof(IRepository<>), typeof(BaseRepository<>));
 
             //Context and Unit
@@ -34,11 +34,11 @@ namespace Store
             container.RegisterType<DbContext, StoreDbContext>(new PerResolveLifetimeManager());
 
             //Logic
-            container.RegisterType<IOrderLogic<Order>, OrderLogic>();
-            container.RegisterType<IUserLogic<User>, UserLogic>();
-            container.RegisterType<IProductLogic<Product>, ProductLogic>();
-            container.RegisterType<IProviderLogic<Provider>, ProviderLogic>();
-            container.RegisterType<IProductTypeLogic<ProductType>, ProductTypeLogic>();
+            container.RegisterType<IOrderLogic, OrderLogic>();
+            container.RegisterType<IUserLogic, UserLogic>();
+            container.RegisterType<IProductLogic, ProductLogic>();
+            container.RegisterType<IProviderLogic, ProviderLogic>();
+            container.RegisterType<IProductTypeLogic, ProductTypeLogic>();
 
             //Forms
             container.RegisterType<Form, Login>();
@@ -50,6 +50,10 @@ namespace Store
             container.RegisterType<IOrdersManagerFactory, OrdersManagerFactory>();
             container.RegisterType<IOrderLogicFactory, OrderLogicFactory>();
             container.RegisterType<IUserLogicFactory, UserLogicFactory>();
+            container.RegisterType<IProductLogicFactory, ProductLogicFactory>();
+            container.RegisterType<ISerialNumberLogicFactory, SerialNumberLogicFactory>();
+            container.RegisterType<IProviderLogicFactory, ProviderLogicFactory>();
+            container.RegisterType<IProductTypeLogicFactory, ProductTypeLogicFactory>();
             container.RegisterType<IFormFactory, ProductViewFactory>("productview");
             container.RegisterType<IFormFactory, ManageUsersFactory>("manageusers");
 

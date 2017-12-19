@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using DataModel.Entities;
+using System.Collections.Generic;
 
 namespace Interfaces.Logic
 {
-    public interface IProductLogic<T> : ICrudLogic<T> 
+    public interface IProductLogic : ICrudLogic<Product>
     {
-        List<T> GetMapped();
+        List<Product> GetMapped();
 
-        void Add(T Item, List<string> serialnums);
+        void Add(Product Item, List<string> serialnums);
+
+        void ModifySerialNumbers(Product Item, List<SerialNumber> serialnumbers);
     }
 }

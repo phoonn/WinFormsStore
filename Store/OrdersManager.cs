@@ -20,8 +20,8 @@ namespace Store
     {
         
         private BindingSource ordersBS = new BindingSource();
-        private IOrderLogic<Order> orderlogic;
-        private IUserLogic<User> userlogic;
+        private IOrderLogic orderlogic;
+        private IUserLogic userlogic;
         private User currentUser;
         private List<Order> allorders;
         private AutoCompleteStringCollection[] autocomplete = new AutoCompleteStringCollection[6];

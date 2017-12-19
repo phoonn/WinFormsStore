@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using DataModel.Entities;
+using Interfaces;
 using Interfaces.Logic;
 using Interfaces.Repositories;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace BusinessLogic
 {
-    public class BaseCrudLogic<T> : ICrudLogic<T> where T: class,IBaseEntity,new()
+    public class BaseCrudLogic<T> : ICrudLogic<T> where T: BaseEntity,new()
     {
         private IRepository<T> Repo;
         private IUnitOfWork Unit;

@@ -77,7 +77,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\IBaseEntity.cs" />
     <Compile Include="Logic\ICrudLogic.cs" />
     <Compile Include="Logic\IOrderLogic.cs" />
     <Compile Include="Logic\IProductLogic.cs" />
@@ -98,6 +97,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataModel\DataModel.csproj">
+      <Project>{b0357a71-0792-4aab-8a2d-55e204961afd}</Project>
+      <Name>DataModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

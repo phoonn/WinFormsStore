@@ -9,7 +9,7 @@ using Interfaces.Repositories;
 
 namespace BusinessLogic
 {
-    public class ProviderLogic : BaseCrudLogic<Provider>, IProviderLogic<Provider>
+    public class ProviderLogic : BaseCrudLogic<Provider>, IProviderLogic
     {
         public ProviderLogic(IRepository<Provider> Repo, IUnitOfWork Unit) : base(Repo, Unit)
         {

@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 namespace BusinessLogic
 {
-    public class UserLogic : IUserLogic<User>
+    public class UserLogic : IUserLogic
     {
         private IUnitOfWork Unit;
-        private IUserRepository<User> UserRepo;
+        private IUserRepository UserRepo;
 
         //public UsersLogic()
         //{
@@ -17,7 +17,7 @@ namespace BusinessLogic
         //    UserRepo = new UserRepository(Unit, context);
         //}
 
-        public UserLogic(IUnitOfWork Unit, IUserRepository<User> UserRepo)
+        public UserLogic(IUnitOfWork Unit, IUserRepository UserRepo)
         {
             this.Unit = Unit;
             this.UserRepo = UserRepo;

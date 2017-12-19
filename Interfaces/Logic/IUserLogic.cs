@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DataModel.Entities;
 
 namespace Interfaces.Logic
 {
-    public interface IUserLogic<T> : IDisposable ,ICrudLogic<T> where T:class,IBaseEntity,new()
+    public interface IUserLogic : ICrudLogic<User>
     {
-        T Login(string name, string password);
+        User Login(string name, string password);
     }
 }

@@ -15,10 +15,10 @@ namespace Store.ProductForms
         private BindingSource productBS = new BindingSource();
         private List<ProductType> producttypelist;
         private List<Provider> providerlist;
-        private IProductLogic<Product> productlogic;
-        private IProviderLogic<Provider> providerlogic { get; set; }
-        private IProductTypeLogic<ProductType> producttypelogic { get; set; }
-        private ISerialNumberLogic<SerialNumber> serialnumberlogic { get; set; }
+        private IProductLogic productlogic;
+        private IProviderLogic providerlogic { get; set; }
+        private IProductTypeLogic producttypelogic { get; set; }
+        private ISerialNumberLogic serialnumberlogic { get; set; }
         private readonly IProductLogicFactory productfactory;
         private readonly IProviderLogicFactory providerfactory;
         private readonly IProductTypeLogicFactory producttypefactory;
@@ -130,11 +130,11 @@ namespace Store.ProductForms
         private void AddProduct_tool_Click(object sender, EventArgs e)
         {
             Product product=new Product();
-            List<string> serialist = new List<string>();
+            List<SerialNumber> serialist = new List<SerialNumber>();
             AddProduct addproductform = new AddProduct(product,producttypelist,serialist,providerlist);
             if (addproductform.ShowDialog()==DialogResult.OK)
             {
-                Save(product,serialist);
+                Save(product,serialist.Select(s=>s.SerialNum).ToList());
             }
         }
 
@@ -145,20 +145,17 @@ namespace Store.ProductForms
                 return;
             }
             Product product = (Product)productBS.Current;
-            List<string> serialist = new List<string>();
+            List<SerialNumber> serialist = new List<SerialNumber>();
             using (StoreDbContext context = new StoreDbContext())
             {
                 ProductRepository productrepo = new ProductRepository(context);
                 product = productrepo.GetById(product.Id);
-                foreach (var item in product.SerialNumbers.ToList())
-                {
-                    serialist.Add(item.SerialNum);
-                }
+                serialist = product.SerialNumbers.ToList();
             }
             AddProduct addproductform = new AddProduct(product, producttypelist,serialist,providerlist);
             if (addproductform.ShowDialog()==DialogResult.OK)
             {
-                Save(product,serialist);
+                Save(product, serialist.Select(s => s.SerialNum).ToList());
             }
 
 
@@ -226,42 +223,43 @@ namespace Store.ProductForms
                 return;
             }
             Product product = (Product)productBS.Current;
-            List<string> seriallist; 
+            List<SerialNumber> seriallist;
             using (productlogic = productfactory.CreateNew())
             {
                 product = productlogic.GetById(product.Id);
-                seriallist = product.SerialNumbers.Select(s => s.SerialNum).ToList();
-            }
-            SerialNumbers serialnums = new SerialNumbers(seriallist, product.Quantity);
-            if (serialnums.ShowDialog()==DialogResult.OK)
-            {
-                using (StoreDbContext context = new StoreDbContext())
+                seriallist = product.SerialNumbers.ToList();
+                SerialNumbers serialnums = new SerialNumbers(seriallist, product.Quantity);
+                if (serialnums.ShowDialog()==DialogResult.OK)
                 {
-                    ProductRepository productrepo = new ProductRepository(context);
-                    SerialNumberRepository serialrepo = new SerialNumberRepository(context);
-                    if (product.Id != 0 && product.SerialNumbers.Count != 0)
-                    {
-                        foreach (var item in product.SerialNumbers.ToList())
-                        {
-                            serialrepo.Delete(item);
-                        }
-                        product.SerialNumbers.Clear();
-                    }
-                    foreach (var item in seriallist)
-                    {
-                        if (!String.IsNullOrEmpty(item))
-                        {
-                            SerialNumber serialnum = new SerialNumber();
-                            serialnum.SerialNum = item;
-                            serialnum.ProductId = product.Id;
-                            serialrepo.Save(serialnum);
-                            product.SerialNumbers.Add(serialnum);
-                        }
-                    }
-                    product.Quantity = product.SerialNumbers.Count;
-                    productrepo.Update(product);
-                    context.SaveChanges();
-                    RefreshAll();
+                    productlogic.ModifySerialNumbers(product, seriallist);
+                    //using (StoreDbContext context = new StoreDbContext())
+                    //{
+                    //    ProductRepository productrepo = new ProductRepository(context);
+                    //    SerialNumberRepository serialrepo = new SerialNumberRepository(context);
+                    //    if (product.Id != 0 && product.SerialNumbers.Count != 0)
+                    //    {
+                    //        foreach (var item in product.SerialNumbers.ToList())
+                    //        {
+                    //            serialrepo.Delete(item);
+                    //        }
+                    //        product.SerialNumbers.Clear();
+                    //    }
+                    //    foreach (var item in seriallist)
+                    //    {
+                    //        if (!String.IsNullOrEmpty(item))
+                    //        {
+                    //            SerialNumber serialnum = new SerialNumber();
+                    //            serialnum.SerialNum = item;
+                    //            serialnum.ProductId = product.Id;
+                    //            serialrepo.Save(serialnum);
+                    //            product.SerialNumbers.Add(serialnum);
+                    //        }
+                    //    }
+                    //    product.Quantity = product.SerialNumbers.Count;
+                    //    productrepo.Update(product);
+                    //    context.SaveChanges();
+                    //    RefreshAll();
+                    //}
                 }
             }
         }

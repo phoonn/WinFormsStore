@@ -1,6 +1,8 @@
-﻿namespace Interfaces.Logic
+﻿using DataModel.Entities;
+
+namespace Interfaces.Logic
 {
-    public interface ISerialNumberLogic<T> : ICrudLogic<T>
+    public interface ISerialNumberLogic : ICrudLogic<SerialNumber>
     {
     }
 }

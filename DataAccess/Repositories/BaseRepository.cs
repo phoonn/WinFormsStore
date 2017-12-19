@@ -5,10 +5,11 @@ using System.Data.Entity;
 using System.Linq.Expressions;
 using Interfaces.Repositories;
 using Interfaces;
+using DataModel.Entities;
 
 namespace DataAccess.Repositories
 {
-    public class BaseRepository<T> : IRepository<T> where T: class,IBaseEntity,new()
+    public class BaseRepository<T> : IRepository<T> where T: BaseEntity,new()
     {
         internal DbContext context { get; set; }
 

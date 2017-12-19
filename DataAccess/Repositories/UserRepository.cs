@@ -5,7 +5,7 @@ using System.Data.Entity;
 
 namespace DataAccess.Repositories
 {
-    public class UserRepository : BaseRepository<User> , IUserRepository<User>
+    public class UserRepository : BaseRepository<User> , IUserRepository
     {
         public User Login(string username, string password)
         {

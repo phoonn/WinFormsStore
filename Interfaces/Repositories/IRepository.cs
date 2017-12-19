@@ -1,11 +1,12 @@
-﻿using System;
+﻿using DataModel.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace Interfaces.Repositories
 {
-    public interface IRepository<T> where T:class,IBaseEntity,new()
+    public interface IRepository<T> where T: BaseEntity, new()
     {
         IEnumerable<T> Get(
             Expression<Func<T, bool>> filter = null,

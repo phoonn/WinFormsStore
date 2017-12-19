@@ -7,7 +7,7 @@ namespace Store
 {
     public partial class ChangeUser : Form
     {
-        private IUserLogic<User> logic;
+        private IUserLogic logic;
         private User usertologin;
 
 

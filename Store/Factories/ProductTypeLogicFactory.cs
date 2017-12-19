@@ -13,9 +13,9 @@ namespace Store.Factories
         {
             this.container = container;
         }
-        public IProductTypeLogic<ProductType> CreateNew()
+        public IProductTypeLogic CreateNew()
         {
-            return container.Resolve<IProductTypeLogic<ProductType>>();
+            return container.Resolve<IProductTypeLogic>();
         }
     }
 }

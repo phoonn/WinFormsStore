@@ -1,6 +1,8 @@
-﻿namespace Interfaces.Logic
+﻿using DataModel.Entities;
+
+namespace Interfaces.Logic
 {
-    public interface IProviderLogic<T> : ICrudLogic<T>
+    public interface IProviderLogic : ICrudLogic<Provider>
     {
 
     }

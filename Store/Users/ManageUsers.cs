@@ -8,10 +8,10 @@ namespace Store.Users
 {
     public partial class ManageUsers : Form
     {
-        private IUserLogic<User> logic;
+        private IUserLogic logic;
         private BindingSource userBs = new BindingSource();
 
-        public ManageUsers(IUserLogic<User> logic)
+        public ManageUsers(IUserLogic logic)
         {
             InitializeComponent();
             this.Icon = Properties.Resources.StoreIcon;

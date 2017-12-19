@@ -1,7 +1,9 @@
-﻿namespace Interfaces.Repositories
+﻿using DataModel.Entities;
+
+namespace Interfaces.Repositories
 {
-    public interface ISerialNumberRepository<T> : IRepository<T> where T : class, IBaseEntity, new()
+    public interface ISerialNumberRepository : IRepository<SerialNumber>
     {
-        T FindByName(string name);
+        SerialNumber FindByName(string name);
     }
 }

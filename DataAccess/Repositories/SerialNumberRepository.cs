@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DataAccess.Repositories
 {
-    public class SerialNumberRepository : BaseRepository<SerialNumber> ,ISerialNumberRepository<SerialNumber>
+    public class SerialNumberRepository : BaseRepository<SerialNumber> ,ISerialNumberRepository
     {
         public SerialNumberRepository(IUnitOfWork unit, DbContext context) : base(unit, context)
         { }

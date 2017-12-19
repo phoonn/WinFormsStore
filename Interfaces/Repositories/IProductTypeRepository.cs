@@ -1,7 +1,9 @@
-﻿namespace Interfaces.Repositories
+﻿using DataModel.Entities;
+
+namespace Interfaces.Repositories
 {
-    public interface IProductTypeRepository<T> : IRepository<T> where T : class, IBaseEntity, new()
+    public interface IProductTypeRepository : IRepository<ProductType> 
     {
-        T FindByName(string name);
+        ProductType FindByName(string name);
     }
 }

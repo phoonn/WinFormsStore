@@ -10,6 +10,8 @@ namespace DataModel.Entities
         public string SerialNum { get; set; }
         [DisplayName("Parent"),Column(Order=3),ForeignKey("Product")]
         public int ProductId { get; set; }
+        [NotMapped]
+        public bool Modified { get; set; }
 
         public virtual Product Product { get; set; }
     }

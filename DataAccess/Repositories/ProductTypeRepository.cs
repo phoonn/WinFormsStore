@@ -6,7 +6,7 @@ using System;
 
 namespace DataAccess.Repositories
 {
-    public class ProductTypeRepository : BaseRepository<ProductType> , IProductTypeRepository<ProductType>
+    public class ProductTypeRepository : BaseRepository<ProductType> , IProductTypeRepository
     {
         public ProductType GetByName(string typename)
         {

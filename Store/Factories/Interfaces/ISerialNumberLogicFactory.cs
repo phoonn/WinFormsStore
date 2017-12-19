@@ -5,6 +5,6 @@ namespace Store.Factories.Interfaces
 {
     public interface ISerialNumberLogicFactory
     {
-        ISerialNumberLogic<SerialNumber> CreateNew();
+        ISerialNumberLogic CreateNew();
     }
 }

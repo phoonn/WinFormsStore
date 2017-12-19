@@ -8,9 +8,9 @@ using System.Linq.Expressions;
 
 namespace BusinessLogic
 {
-    public class OrderLogic : IOrderLogic<Order>
+    public class OrderLogic : IOrderLogic
     {
-        private IOrderRepository<Order> Orderrepo;
+        private IOrderRepository Orderrepo;
         private IUnitOfWork Unit;
 
         //public OrdersLogic()
@@ -20,7 +20,7 @@ namespace BusinessLogic
         //    this.Orderrepo = new OrderRepository(Unit, Context);
         //}
 
-        public OrderLogic(IUnitOfWork Unit, IOrderRepository<Order> Orderrepo)
+        public OrderLogic(IUnitOfWork Unit, IOrderRepository Orderrepo)
         {
             this.Unit = Unit;
             this.Orderrepo = Orderrepo;

@@ -1,7 +1,9 @@
-﻿namespace Interfaces.Repositories
+﻿using DataModel.Entities;
+
+namespace Interfaces.Repositories
 {
-    public interface IProviderRepository<T> : IRepository<T> where T : class, IBaseEntity, new()
-    {
-        T FindByName(string name);
+    public interface IProviderRepository : IRepository<Provider>
+    { 
+        Provider FindByName(string name);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel.Entities;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace Store.ProductForms
 {
     public partial class SerialNumbers : Form
     {
-        private List<String> seriallist;
+        private List<SerialNumber> seriallist;
         private int count;
-        public SerialNumbers(List<String> seriallist,int count)
+        public SerialNumbers(List<SerialNumber> seriallist,int count)
         {
             this.seriallist = seriallist;
             this.count = count;
@@ -48,13 +49,29 @@ namespace Store.ProductForms
                 }
             }
         }
-        private void GetTextBoxStrings(List<string> list)
+        private void GetTextBoxStrings(List<SerialNumber> list)
         {
-            list.Clear();
+            int counter = 0;
             foreach (Control c in parentpanel.Controls)
             {
                 if (c is TextBox)
-                    list.Add(((TextBox)c).Text);
+                {
+                    if (list.Count>counter)
+                    {
+                        if (((TextBox)c).Text != list[counter].SerialNum)
+                        {
+                            list[counter].SerialNum = ((TextBox)c).Text;
+                            list[counter].Modified = true;
+                        }
+                    }
+                    else if(((TextBox)c).Text.Trim() != String.Empty)
+                    {
+                        SerialNumber serialnum = new SerialNumber();
+                        serialnum.SerialNum = ((TextBox)c).Text;
+                        list.Add(serialnum);
+                    }
+                }
+                counter++;
             }
         }
 
@@ -66,7 +83,7 @@ namespace Store.ProductForms
                 if (i<seriallist.Count)
                 {
                     if (c is TextBox)
-                        c.Text = seriallist[i];
+                        c.Text = seriallist[i].SerialNum;
                     else
                         break;
                 }

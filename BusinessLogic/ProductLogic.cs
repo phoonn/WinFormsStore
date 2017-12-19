@@ -7,15 +7,15 @@ using System.Linq;
 
 namespace BusinessLogic
 {
-    public class ProductLogic : IProductLogic<Product>
+    public class ProductLogic : IProductLogic
     {
         private IUnitOfWork Unit;
-        private IProductRepository<Product> ProductRepo;
-        private IProviderRepository<Provider> ProviderRepo;
-        private IProductTypeRepository<ProductType> ProductTypeRepo;
-        private ISerialNumberRepository<SerialNumber> SerianNumberRepo;
+        private IProductRepository ProductRepo;
+        private IProviderRepository ProviderRepo;
+        private IProductTypeRepository ProductTypeRepo;
+        private ISerialNumberRepository SerianNumberRepo;
 
-        public ProductLogic(IUnitOfWork Unit, IProductRepository<Product> ProductRepo, IProviderRepository<Provider> ProviderRepo, IProductTypeRepository<ProductType> ProductTypeRepo, ISerialNumberRepository<SerialNumber> SerianNumberRepo)
+        public ProductLogic(IUnitOfWork Unit, IProductRepository ProductRepo, IProviderRepository ProviderRepo, IProductTypeRepository ProductTypeRepo, ISerialNumberRepository SerianNumberRepo)
         {                                                                                                                         
             this.Unit = Unit;
             this.ProductRepo = ProductRepo;
@@ -52,6 +52,31 @@ namespace BusinessLogic
                 Item.SerialNumbers.Add(num);
             }
             ProductRepo.Save(Item);
+            Unit.SaveChanges();
+        }
+
+        public void ModifySerialNumbers(Product Item, List<SerialNumber> serialnumbers)
+        {
+            foreach (var number in serialnumbers)
+            {
+                if (number.Id!=0)
+                {
+                    if (number.Modified)
+                    {
+                        SerianNumberRepo.Update(number);
+                    }
+                }
+                else
+                {
+                    number.ProductId = Item.Id;
+                    SerianNumberRepo.Save(number);
+                }
+            }
+            if (serialnumbers.Count>Item.Quantity)
+            {
+                Item.Quantity = serialnumbers.Count;
+                ProductRepo.Update(Item);
+            }
             Unit.SaveChanges();
         }
 

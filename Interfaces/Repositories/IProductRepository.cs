@@ -1,6 +1,8 @@
-﻿namespace Interfaces.Repositories
+﻿using DataModel.Entities;
+
+namespace Interfaces.Repositories
 {
-    public interface IProductRepository<T> : IRepository<T> where T:class,IBaseEntity,new()
+    public interface IProductRepository : IRepository<Product> 
     {
     }
 }

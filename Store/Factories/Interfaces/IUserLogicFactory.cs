@@ -5,6 +5,6 @@ namespace Store.Factories.Interfaces
 {
     public interface IUserLogicFactory
     {
-        IUserLogic<User> CreateNew();
+        IUserLogic CreateNew();
     }
 }

@@ -13,9 +13,9 @@ namespace Store.Factories
         {
             this.container = container;
         }
-        public IProviderLogic<Provider> CreateNew()
+        public IProviderLogic CreateNew()
         {
-            return container.Resolve<IProviderLogic<Provider>>();
+            return container.Resolve<IProviderLogic>();
         }
     }
 }

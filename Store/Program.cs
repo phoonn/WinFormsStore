@@ -32,8 +32,8 @@ namespace Store
             Bindings.RegisterTypes(container);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(container.Resolve<ProductView>());
-            Application.Run(container.Resolve<Login>());
+            Application.Run(container.Resolve<ProductView>());
+            //Application.Run(container.Resolve<Login>());
 
             
         }

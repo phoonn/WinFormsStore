@@ -13,9 +13,9 @@ namespace Store.Factories
         {
             this.container = container;
         }
-        public ISerialNumberLogic<SerialNumber> CreateNew()
+        public ISerialNumberLogic CreateNew()
         {
-            return container.Resolve<ISerialNumberLogic<SerialNumber>>();
+            return container.Resolve<ISerialNumberLogic>();
         }
     }
 }

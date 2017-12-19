@@ -15,9 +15,9 @@ namespace Store.Factories
             this.container = container;
         }
 
-        public IUserLogic<User> CreateNew()
+        public IUserLogic CreateNew()
         {
-            return container.Resolve<IUserLogic<User>>();
+            return container.Resolve<IUserLogic>();
         }
     }
 }

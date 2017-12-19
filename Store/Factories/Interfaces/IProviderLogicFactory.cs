@@ -5,6 +5,6 @@ namespace Store.Factories.Interfaces
 {
     public interface IProviderLogicFactory
     {
-        IProviderLogic<Provider> CreateNew();
+        IProviderLogic CreateNew();
     }
 }

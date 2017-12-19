@@ -6,7 +6,7 @@ using System;
 
 namespace DataAccess.Repositories
 {
-    public class ProviderRepository :BaseRepository<Provider> , IProviderRepository<Provider>
+    public class ProviderRepository :BaseRepository<Provider> , IProviderRepository
     {
         public Provider GetByName(string typename)
         {

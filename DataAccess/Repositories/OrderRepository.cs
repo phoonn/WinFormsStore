@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DataAccess.Repositories
 {
-    public class OrderRepository : BaseRepository<Order> , IOrderRepository<Order>
+    public class OrderRepository : BaseRepository<Order> , IOrderRepository
     {
         public List<Order> Search(string firstname, string secondname,bool? SortByDate, int? id , int? Day , int? Month, int? Year)
         {

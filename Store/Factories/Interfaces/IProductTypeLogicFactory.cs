@@ -5,6 +5,6 @@ namespace Store.Factories.Interfaces
 {
     public interface IProductTypeLogicFactory
     {
-        IProductTypeLogic<ProductType> CreateNew();
+        IProductTypeLogic CreateNew();
     }
 }

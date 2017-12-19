@@ -13,11 +13,11 @@ namespace Store.ProductForms
     {
         private Product product;
         private List<ProductType> producttypelist;
-        private List<string> seriallist = new List<string>();
+        private List<SerialNumber> seriallist = new List<SerialNumber>();
         private List<Provider> providerlist;
         private string defaultcombobox = "---";
         
-        public AddProduct(Product product,List<ProductType>producttypelist,List<string> seriallist,List<Provider> providerlist)
+        public AddProduct(Product product,List<ProductType>producttypelist,List<SerialNumber> seriallist,List<Provider> providerlist)
         {
             this.product = product;
             this.producttypelist = producttypelist;

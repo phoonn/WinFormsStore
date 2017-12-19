@@ -1,7 +1,9 @@
-﻿namespace Interfaces.Repositories
+﻿using DataModel.Entities;
+
+namespace Interfaces.Repositories
 {
-    public interface IUserRepository<T> : IRepository<T> where T: class,IBaseEntity,new()
+    public interface IUserRepository : IRepository<User>
     {
-        T Login(string username, string password);
+        User Login(string username, string password);
     }
 }

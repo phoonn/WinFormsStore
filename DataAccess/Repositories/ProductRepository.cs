@@ -4,7 +4,7 @@ using System.Data.Entity;
 
 namespace DataAccess.Repositories
 {
-    public class ProductRepository : BaseRepository<Product> , IProductRepository<Product>
+    public class ProductRepository : BaseRepository<Product> , IProductRepository
     {
         public ProductRepository(IUnitOfWork unit, DbContext context) : base(unit, context)
         {

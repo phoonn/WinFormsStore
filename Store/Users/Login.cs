@@ -13,9 +13,9 @@ namespace Store
     public partial class Login : Form
     {
         private User currentUser;
-        private readonly IUserLogic<User> logic;
+        private readonly IUserLogic logic;
         private readonly IOrdersManagerFactory factory;
-        public Login(IOrdersManagerFactory factory, IUserLogic<User> logic)
+        public Login(IOrdersManagerFactory factory, IUserLogic logic)
         {
             InitializeComponent();
             this.Icon = Properties.Resources.StoreIcon;

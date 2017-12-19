@@ -1,6 +1,8 @@
-﻿namespace Interfaces.Logic
+﻿using DataModel.Entities;
+
+namespace Interfaces.Logic
 {
-    public interface IProductTypeLogic<T> : ICrudLogic<T>
+    public interface IProductTypeLogic : ICrudLogic<ProductType>
     {
     }
 }
