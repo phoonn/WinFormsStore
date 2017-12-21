@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BusinessLogic.dll" size="10240">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BusinessLogic.dll" size="11264">
       <assemblyIdentity name="BusinessLogic" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>uxO7s2mBoL8II2QnuoZKGTbsZpxmub8w9hTLYdjTYHc=</dsig:DigestValue>
+        <dsig:DigestValue>J0Z3n7qFR/+DBDoemLQUgCEnhU332Wnmugto4NQo6Yg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -266,7 +266,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>D9X0Kv09TUf23V+zHSoZsuPLD0ZyYVOjHpkTa0KdaJE=</dsig:DigestValue>
+        <dsig:DigestValue>gd+farnUSX1NGpBdLOLqOOJ+iupuUU22XTx4RCEWh68=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -338,7 +338,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>kI57G0c6iza2JHsao68YXIfFJ+koDCxofwXa/1cwPiY=</dsig:DigestValue>
+        <dsig:DigestValue>JSjUIbtVSpWy+BcB0rb2jB/qESYPBjH62nl69rdqCLA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -391,14 +391,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Store.exe" size="9626624">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Store.exe" size="9627648">
       <assemblyIdentity name="Store" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hD4GldlSJXy7Hq1XkQ0+tZUZWH8Zhm480kAlPTm1hD8=</dsig:DigestValue>
+        <dsig:DigestValue>QyRLHyq1Uq3wAldd45EkUxQEC6zeoNavKetXmIsUmqo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -132,6 +132,7 @@
     <Compile Include="Factories\Interfaces\IProductTypeLogicFactory.cs" />
     <Compile Include="Factories\Interfaces\IProviderLogicFactory.cs" />
     <Compile Include="Factories\Interfaces\ISerialNumberLogicFactory.cs" />
+    <Compile Include="Factories\Interfaces\ISerialNumbersFormFactory.cs" />
     <Compile Include="Factories\Interfaces\IUserLogicFactory.cs" />
     <Compile Include="Factories\ManageUsersFactory.cs" />
     <Compile Include="Factories\OrderLogicFactory.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Factories\ProductViewFactory.cs" />
     <Compile Include="Factories\ProviderLogicFactory.cs" />
     <Compile Include="Factories\SerialNumberLogicFactory.cs" />
+    <Compile Include="Factories\SerialNumbersFormFactory.cs" />
     <Compile Include="Factories\UserLogicFactory.cs" />
     <Compile Include="FormBackup.cs">
       <SubType>Form</SubType>

@@ -12,6 +12,7 @@ using DataModel.Entities;
 using Interfaces.Logic;
 using Store.Factories.Interfaces;
 using Store.Factories;
+using System.Collections.Generic;
 
 namespace Store
 {
@@ -39,12 +40,16 @@ namespace Store
             container.RegisterType<IProductLogic, ProductLogic>();
             container.RegisterType<IProviderLogic, ProviderLogic>();
             container.RegisterType<IProductTypeLogic, ProductTypeLogic>();
+            container.RegisterType<ISerialNumberLogic, SerialNumberLogic>();
 
             //Forms
+            List<SerialNumber> seriallist = new List<SerialNumber>();
+            int count = 0;
             container.RegisterType<Form, Login>();
             container.RegisterType<Form, OrdersManager>(new InjectionConstructor(new User(),new ResolvedParameter<IOrderLogicFactory>(), new ResolvedParameter<IUserLogicFactory>()));
             container.RegisterType<Form, ManageUsers>();
             container.RegisterType<Form, ProductView>();
+            container.RegisterType<Form, SerialNumbers>(new InjectionConstructor(seriallist,count,new ResolvedParameter<ISerialNumberLogic>()));
 
             //Factories
             container.RegisterType<IOrdersManagerFactory, OrdersManagerFactory>();
@@ -56,6 +61,7 @@ namespace Store
             container.RegisterType<IProductTypeLogicFactory, ProductTypeLogicFactory>();
             container.RegisterType<IFormFactory, ProductViewFactory>("productview");
             container.RegisterType<IFormFactory, ManageUsersFactory>("manageusers");
+            container.RegisterType<ISerialNumbersFormFactory, SerialNumbersFormFactory>();
 
             //container 
             container.RegisterInstance<IUnityContainer>(container);

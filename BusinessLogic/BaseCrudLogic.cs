@@ -9,8 +9,8 @@ namespace BusinessLogic
 {
     public class BaseCrudLogic<T> : ICrudLogic<T> where T: BaseEntity,new()
     {
-        private IRepository<T> Repo;
-        private IUnitOfWork Unit;
+        internal IRepository<T> Repo;
+        internal IUnitOfWork Unit;
 
         public BaseCrudLogic(IRepository<T> Repo,IUnitOfWork Unit)
         {

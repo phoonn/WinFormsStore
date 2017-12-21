@@ -7,8 +7,10 @@ namespace Interfaces.Logic
     {
         List<Product> GetMapped();
 
-        void Add(Product Item, List<string> serialnums);
+        void Add(Product Item, List<SerialNumber> serialnums);
 
-        void ModifySerialNumbers(Product Item, List<SerialNumber> serialnumbers);
+        void Update(Product Item, List<SerialNumber> serialnums);
+
+        void ModifySerialNumbers(Product Item, List<SerialNumber> serialnum);
     }
 }

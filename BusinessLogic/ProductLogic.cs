@@ -35,7 +35,7 @@ namespace BusinessLogic
             return products;
         }
 
-        public void Add(Product Item, List<string> serialnums)
+        public void Add(Product Item, List<SerialNumber> serialnums)
         {
             Item.ProductType = ProductTypeRepo.FindByName(Item.ProductTypeName);
             if (Item.ProductType==null)
@@ -45,13 +45,37 @@ namespace BusinessLogic
             }
             Item.Provider = ProviderRepo.FindByName(Item.ProviderName);
             Item.SerialNumbers = new Collection<SerialNumber>();
-            foreach (var item in serialnums)
-            {
-                SerialNumber num = new SerialNumber();
-                num.SerialNum = item;
-                Item.SerialNumbers.Add(num);
-            }
+            Item.SerialNumbers = serialnums;
             ProductRepo.Save(Item);
+            Unit.SaveChanges();
+        }
+
+        public void Update(Product Item, List<SerialNumber> serialnums)
+        {
+            Item.ProductType = ProductTypeRepo.FindByName(Item.ProductTypeName);
+            if (Item.ProductType == null)
+            {
+                Item.ProductType = new ProductType();
+                Item.ProductType.Type = Item.ProductTypeName;
+            }
+            Item.Provider = ProviderRepo.FindByName(Item.ProviderName);
+            foreach (var number in serialnums)
+            {
+                if (number.Id != 0)
+                {
+                    if (number.Modified)
+                    {
+                        SerianNumberRepo.Update(number);
+                    }
+                }
+                else
+                {
+                    number.ProductId = Item.Id;
+                    SerianNumberRepo.Save(number);
+                }
+            }
+            Item.SerialNumbers = serialnums;
+            ProductRepo.Update(Item);
             Unit.SaveChanges();
         }
 

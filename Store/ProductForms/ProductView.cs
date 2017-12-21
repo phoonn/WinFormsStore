@@ -23,75 +23,33 @@ namespace Store.ProductForms
         private readonly IProviderLogicFactory providerfactory;
         private readonly IProductTypeLogicFactory producttypefactory;
         private readonly ISerialNumberLogicFactory serialnumberfactory;
+        private readonly ISerialNumbersFormFactory serialnumberformfactory;
 
-        public ProductView(IProductLogicFactory productfactory, IProviderLogicFactory providerfactory, IProductTypeLogicFactory producttypefactory, ISerialNumberLogicFactory serialnumberfactory)
+        public ProductView(IProductLogicFactory productfactory, IProviderLogicFactory providerfactory, IProductTypeLogicFactory producttypefactory, ISerialNumberLogicFactory serialnumberfactory, ISerialNumbersFormFactory serialnumberformfactory)
         {
             InitializeComponent();
             this.productfactory = productfactory;
             this.providerfactory = providerfactory;
             this.producttypefactory = producttypefactory;
             this.serialnumberfactory = serialnumberfactory;
+            this.serialnumberformfactory = serialnumberformfactory;
             RefreshAll(true);
         }
 
-        private void Save(Product product,List<string>seriallist)
+        private void Save(Product product, List<SerialNumber> seriallist)
         {
-            //try
-            //{
-            //using (StoreDbContext context = new StoreDbContext())
-            //{
-            //    ProductRepository productrepo = new ProductRepository(context);
-            //    SerialNumberRepository serialrepo = new SerialNumberRepository(context);
-            //    ProductTypeRepository producttyperepo = new ProductTypeRepository(context);
-            //    ProductType producttype = producttyperepo.GetByName(product.ProductName);
-            //    ProviderRepository providerrepo = new ProviderRepository(context);
-            //    Provider provider = providerrepo.GetByName(product.ProviderName);
-            //    if (producttype == null)
-            //    {
-            //        producttype = new ProductType();
-            //        producttype.Type = product.ProductTypeName;
-            //        //producttyperepo.Save(producttype);
-            //        //producttypelist.Add(producttype);
-            //        //context.SaveChanges();
-            //    }
-            //    product.ProviderId = provider.Id;
-            //    product.Provider = provider;
-            //    //product.ProductTypeId = producttype.Id;
-            //    product.ProductType = producttype;
-            //    productrepo.Save(product);
-            //    context.SaveChanges();
-            //    if (product.Id != 0 && product.SerialNumbers != null && product.SerialNumbers.Count > 0)
-            //    {
-            //        foreach (var item in product.SerialNumbers.ToList())
-            //        {
-            //            serialrepo.Delete(item);
-            //        }
-            //        product.SerialNumbers.Clear();
-            //    }
-            //    foreach (var item in seriallist)
-            //    {
-            //        if (!String.IsNullOrEmpty(item))
-            //        {
-            //            SerialNumber serialnum = new SerialNumber();
-            //            serialnum.SerialNum = item;
-            //            serialnum.ProductId = product.Id;
-            //            serialrepo.Save(serialnum);
-            //            context.SaveChanges();
-            //            product.SerialNumbers.Add(serialnum);
-            //        }
-            //    }
-            //    context.SaveChanges();
-            //}
-            //}
-            //catch (Exception ex)
-            //{
-            //    ErrorLogger.Log(ex);
-            //    MessageBox.Show("An Error occured, check log file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
             using (productlogic = productfactory.CreateNew())
             {
                 productlogic.Add(product,seriallist);
+            }
+            RefreshAll();
+        }
+
+        private void Update(Product product, List<SerialNumber> serialist)
+        {
+            using (productlogic = productfactory.CreateNew())
+            {
+                productlogic.Update(product, serialist);
             }
             RefreshAll();
         }
@@ -114,7 +72,6 @@ namespace Store.ProductForms
                 }
                 productBS.DataSource = productlogic.GetMapped();
             }
-                
             //}
             //catch (Exception ex)
             //{
@@ -134,7 +91,7 @@ namespace Store.ProductForms
             AddProduct addproductform = new AddProduct(product,producttypelist,serialist,providerlist);
             if (addproductform.ShowDialog()==DialogResult.OK)
             {
-                Save(product,serialist.Select(s=>s.SerialNum).ToList());
+                Save(product,serialist);
             }
         }
 
@@ -145,17 +102,16 @@ namespace Store.ProductForms
                 return;
             }
             Product product = (Product)productBS.Current;
-            List<SerialNumber> serialist = new List<SerialNumber>();
-            using (StoreDbContext context = new StoreDbContext())
+            List<SerialNumber> seriallist = new List<SerialNumber>();
+            using (productlogic = productfactory.CreateNew())
             {
-                ProductRepository productrepo = new ProductRepository(context);
-                product = productrepo.GetById(product.Id);
-                serialist = product.SerialNumbers.ToList();
+                product = productlogic.GetById(product.Id);
+                seriallist = product.SerialNumbers.ToList();
             }
-            AddProduct addproductform = new AddProduct(product, producttypelist,serialist,providerlist);
+            AddProduct addproductform = new AddProduct(product, producttypelist,seriallist,providerlist);
             if (addproductform.ShowDialog()==DialogResult.OK)
             {
-                Save(product, serialist.Select(s => s.SerialNum).ToList());
+                Update(product, seriallist);
             }
 
 
@@ -228,40 +184,13 @@ namespace Store.ProductForms
             {
                 product = productlogic.GetById(product.Id);
                 seriallist = product.SerialNumbers.ToList();
-                SerialNumbers serialnums = new SerialNumbers(seriallist, product.Quantity);
+                Form serialnums = serialnumberformfactory.CreateNew(seriallist, product.Quantity);
                 if (serialnums.ShowDialog()==DialogResult.OK)
                 {
                     productlogic.ModifySerialNumbers(product, seriallist);
-                    //using (StoreDbContext context = new StoreDbContext())
-                    //{
-                    //    ProductRepository productrepo = new ProductRepository(context);
-                    //    SerialNumberRepository serialrepo = new SerialNumberRepository(context);
-                    //    if (product.Id != 0 && product.SerialNumbers.Count != 0)
-                    //    {
-                    //        foreach (var item in product.SerialNumbers.ToList())
-                    //        {
-                    //            serialrepo.Delete(item);
-                    //        }
-                    //        product.SerialNumbers.Clear();
-                    //    }
-                    //    foreach (var item in seriallist)
-                    //    {
-                    //        if (!String.IsNullOrEmpty(item))
-                    //        {
-                    //            SerialNumber serialnum = new SerialNumber();
-                    //            serialnum.SerialNum = item;
-                    //            serialnum.ProductId = product.Id;
-                    //            serialrepo.Save(serialnum);
-                    //            product.SerialNumbers.Add(serialnum);
-                    //        }
-                    //    }
-                    //    product.Quantity = product.SerialNumbers.Count;
-                    //    productrepo.Update(product);
-                    //    context.SaveChanges();
-                    //    RefreshAll();
-                    //}
                 }
             }
+            RefreshAll();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DataModel.Entities;
+using Interfaces.Logic;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,37 +12,70 @@ namespace Store.ProductForms
     {
         private List<SerialNumber> seriallist;
         private int count;
+        private bool abletodelete = false;
+        private ISerialNumberLogic serialnumlogic;
+        private TextBox[] serialnumBoxes;
         public SerialNumbers(List<SerialNumber> seriallist,int count)
         {
             this.seriallist = seriallist;
             this.count = count;
+            serialnumBoxes = new TextBox[count];
+            InitializeComponent();
+            createSerialBox(count);
+            FillTextBox();
+        }
+
+        public SerialNumbers(List<SerialNumber> seriallist,int count,ISerialNumberLogic serialnumlogic)
+        {
+            this.seriallist = seriallist;
+            this.count = count;
+            abletodelete = true;
+            this.serialnumlogic = serialnumlogic;
+            serialnumBoxes = new TextBox[count];
             InitializeComponent();
             createSerialBox(count);
             FillTextBox();
         }
         private void createSerialBox(int count)
         {
-            TextBox[] serialnumBoxes = new TextBox[count];
+            Button[] deletebuttons = new Button[count];
 
             for (int u = 0; u < serialnumBoxes.Count(); u++)
             {
                 serialnumBoxes[u] = new TextBox();
+                deletebuttons[u] = new Button();
             }
             int i = 0;
             foreach (TextBox txt in serialnumBoxes)
             {
-                string name = "serialnumber" + i.ToString();
+                Button button = new Button();
+                button.Name = i.ToString();
+                button.Parent = parentpanel;
+                button.Size = new Size(50, 20);
+                button.Text = "Delete";
+                button.Click += new System.EventHandler(this.deletebutton_click);
+                
                 int lochight = 10 + (i * 28);
-                int locweight = 20;
+                int locwidth = 20;
                 txt.Parent = parentpanel;
-                txt.Name = name;
-                if (i%2==0)
-                    txt.Location = new Point(locweight, 10 + (i/2 * 28));
+                txt.Name = "serialnumber" + i.ToString();
+                if (i % 2 == 0)
+                {
+                    txt.Location = new Point(locwidth, 10 + (i / 2 * 28));
+                    button.Location = new Point(locwidth + 160, 10 + (i / 2 * 28));
+                }
                 else
-                    txt.Location = new Point(locweight+220, 10 + ((i-1)/2 * 28));
+                {
+                    txt.Location = new Point(locwidth + 220, 10 + ((i - 1) / 2 * 28));
+                    button.Location = new Point(locwidth + 160+220, 10 + (i / 2 * 28));
+                }
                 txt.Visible = true;
-                txt.Size = new Size(200, 20);
+                txt.Size = new Size(150, 20);
                 parentpanel.Controls.Add(txt);
+                if (abletodelete)
+                {
+                    parentpanel.Controls.Add(button);
+                }
                 i++;
                 if (lochight+24>parentpanel.Height)
                 {
@@ -75,6 +109,14 @@ namespace Store.ProductForms
             }
         }
 
+        private void deletebutton_click(object sender, EventArgs e)
+        {
+            Button currentbutton = (Button)sender;
+            string textboxname = "serialnumber" + currentbutton.Name;
+            TextBox currenttextbox = serialnumBoxes.FirstOrDefault(p => p.Name == textboxname);
+            serialnumlogic.DeleteByUnique(currenttextbox.Text);
+        }
+
         private void FillTextBox()
         {
             int i=0;
@@ -85,7 +127,7 @@ namespace Store.ProductForms
                     if (c is TextBox)
                         c.Text = seriallist[i].SerialNum;
                     else
-                        break;
+                        continue;
                 }
                 i++;
             }
