@@ -5,9 +5,9 @@ using Interfaces.Repositories;
 
 namespace BusinessLogic
 {
-    public class SerialNumberLogic : BaseCrudLogic<SerialNumber>, ISerialNumberLogic
+    public class SerialNumberLogic : BaseCrudLogic<SerialNumber, ISerialNumberRepository>, ISerialNumberLogic
     {
-        public SerialNumberLogic(IRepository<SerialNumber> Repo, IUnitOfWork Unit) : base(Repo, Unit)
+        public SerialNumberLogic(ISerialNumberRepository Repo, IUnitOfWork Unit) : base(Repo, Unit)
         {
         }
 

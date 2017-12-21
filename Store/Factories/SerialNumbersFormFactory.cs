@@ -17,9 +17,9 @@ namespace Store.Factories
             this.container = container;
         }
 
-        public Form CreateNew(List<SerialNumber> seriallist, int count)
+        public Form CreateNew(List<SerialNumber> seriallist)
         {
-            return container.Resolve<SerialNumbers>(new ParameterOverride("seriallist", seriallist), new ParameterOverride("count",count));
+            return container.Resolve<SerialNumbers>(new ParameterOverride("seriallist", seriallist));
         }
     }
 }

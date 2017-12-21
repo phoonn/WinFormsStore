@@ -11,39 +11,37 @@ namespace Store.ProductForms
     public partial class SerialNumbers : Form
     {
         private List<SerialNumber> seriallist;
-        private int count;
         private bool abletodelete = false;
         private ISerialNumberLogic serialnumlogic;
-        private TextBox[] serialnumBoxes;
-        public SerialNumbers(List<SerialNumber> seriallist,int count)
+        private List<TextBox> serialnumBoxes;
+        private List<Button> deletebuttons;
+        public SerialNumbers(List<SerialNumber> seriallist)
         {
             this.seriallist = seriallist;
-            this.count = count;
-            serialnumBoxes = new TextBox[count];
+            serialnumBoxes = new List<TextBox>();
+            deletebuttons = new List<Button>();
             InitializeComponent();
-            createSerialBox(count);
+            createSerialBox(seriallist.Count);
             FillTextBox();
         }
 
-        public SerialNumbers(List<SerialNumber> seriallist,int count,ISerialNumberLogic serialnumlogic)
+        public SerialNumbers(List<SerialNumber> seriallist,ISerialNumberLogic serialnumlogic)
         {
             this.seriallist = seriallist;
-            this.count = count;
             abletodelete = true;
             this.serialnumlogic = serialnumlogic;
-            serialnumBoxes = new TextBox[count];
+            serialnumBoxes = new List<TextBox>();
+            deletebuttons = new List<Button>();
             InitializeComponent();
-            createSerialBox(count);
+            createSerialBox(seriallist.Count);
             FillTextBox();
         }
+
         private void createSerialBox(int count)
         {
-            Button[] deletebuttons = new Button[count];
-
-            for (int u = 0; u < serialnumBoxes.Count(); u++)
+            for (int u = 0; u < seriallist.Count; u++)
             {
-                serialnumBoxes[u] = new TextBox();
-                deletebuttons[u] = new Button();
+                serialnumBoxes.Add(new TextBox());
             }
             int i = 0;
             foreach (TextBox txt in serialnumBoxes)
@@ -76,6 +74,7 @@ namespace Store.ProductForms
                 {
                     parentpanel.Controls.Add(button);
                 }
+                deletebuttons.Add(button);
                 i++;
                 if (lochight+24>parentpanel.Height)
                 {
@@ -104,9 +103,25 @@ namespace Store.ProductForms
                         serialnum.SerialNum = ((TextBox)c).Text;
                         list.Add(serialnum);
                     }
+                    counter++;
                 }
-                counter++;
             }
+        }
+
+        private void RemoveControls(int count)
+        {
+            foreach (var item in serialnumBoxes)
+            {
+                parentpanel.Controls.Remove(item);
+                //item.Dispose();
+            }
+            foreach (var item in deletebuttons)
+            {
+                parentpanel.Controls.Remove(item);
+                //item.Dispose();
+            }
+            serialnumBoxes.Clear();
+            deletebuttons.Clear();
         }
 
         private void deletebutton_click(object sender, EventArgs e)
@@ -115,6 +130,10 @@ namespace Store.ProductForms
             string textboxname = "serialnumber" + currentbutton.Name;
             TextBox currenttextbox = serialnumBoxes.FirstOrDefault(p => p.Name == textboxname);
             serialnumlogic.DeleteByUnique(currenttextbox.Text);
+            seriallist.RemoveAt(Convert.ToInt32(currentbutton.Name));
+            RemoveControls(seriallist.Count);
+            createSerialBox(seriallist.Count);
+            FillTextBox();
         }
 
         private void FillTextBox()
@@ -131,7 +150,6 @@ namespace Store.ProductForms
                 }
                 i++;
             }
-
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -143,7 +161,7 @@ namespace Store.ProductForms
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TextBox txt = new TextBox();
-            int i = parentpanel.Controls.Count;
+            int i = serialnumBoxes.Count;
             string name = "serialnumber" + i.ToString();
             int lochight = 10 + (i * 28);
             int locweight = 20;
@@ -154,8 +172,9 @@ namespace Store.ProductForms
             else
                 txt.Location = new Point(locweight + 220, 10 + ((i - 1) / 2 * 28));
             txt.Visible = true;
-            txt.Size = new Size(200, 20);
+            txt.Size = new Size(150, 20);
             parentpanel.Controls.Add(txt);
+            serialnumBoxes.Add(txt);
             i++;
             if (lochight + 24 > parentpanel.Height)
             {

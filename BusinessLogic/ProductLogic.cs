@@ -7,18 +7,14 @@ using System.Linq;
 
 namespace BusinessLogic
 {
-    public class ProductLogic : IProductLogic
+    public class ProductLogic : BaseCrudLogic<Product,IProductRepository>, IProductLogic
     {
-        private IUnitOfWork Unit;
-        private IProductRepository ProductRepo;
         private IProviderRepository ProviderRepo;
         private IProductTypeRepository ProductTypeRepo;
         private ISerialNumberRepository SerianNumberRepo;
 
-        public ProductLogic(IUnitOfWork Unit, IProductRepository ProductRepo, IProviderRepository ProviderRepo, IProductTypeRepository ProductTypeRepo, ISerialNumberRepository SerianNumberRepo)
-        {                                                                                                                         
-            this.Unit = Unit;
-            this.ProductRepo = ProductRepo;
+        public ProductLogic(IProductRepository ProductRepo, IUnitOfWork Unit, IProviderRepository ProviderRepo, IProductTypeRepository ProductTypeRepo, ISerialNumberRepository SerianNumberRepo):base(ProductRepo,Unit)
+        { 
             this.ProviderRepo = ProviderRepo;
             this.ProductTypeRepo = ProductTypeRepo;
             this.SerianNumberRepo = SerianNumberRepo;
@@ -26,7 +22,7 @@ namespace BusinessLogic
 
         public List<Product> GetMapped()
         {
-            List<Product> products = ProductRepo.GetAll();
+            List<Product> products = Repo.GetAll();
             foreach (var item in products)
             {
                 item.ProviderName = item.Provider.ProviderName;
@@ -46,7 +42,7 @@ namespace BusinessLogic
             Item.Provider = ProviderRepo.FindByName(Item.ProviderName);
             Item.SerialNumbers = new Collection<SerialNumber>();
             Item.SerialNumbers = serialnums;
-            ProductRepo.Save(Item);
+            Repo.Save(Item);
             Unit.SaveChanges();
         }
 
@@ -75,7 +71,7 @@ namespace BusinessLogic
                 }
             }
             Item.SerialNumbers = serialnums;
-            ProductRepo.Update(Item);
+            Repo.Update(Item);
             Unit.SaveChanges();
         }
 
@@ -96,35 +92,9 @@ namespace BusinessLogic
                     SerianNumberRepo.Save(number);
                 }
             }
-            if (serialnumbers.Count>Item.Quantity)
-            {
-                Item.Quantity = serialnumbers.Count;
-                ProductRepo.Update(Item);
-            }
+            Item.Quantity = serialnumbers.Count;
+            Repo.Update(Item);
             Unit.SaveChanges();
-        }
-
-        public void Add(Product Item)
-        {
-            ProductRepo.Save(Item);
-            Unit.SaveChanges();
-        }
-
-        public void Delete(Product Item)
-        {
-            ProductRepo.Delete(Item);
-            Unit.SaveChanges();
-        }
-
-        public void Edit(Product Item)
-        {
-            ProductRepo.Update(Item);
-            Unit.SaveChanges();
-        }
-
-        public List<Product> Get()
-        {
-            return ProductRepo.GetAll();
         }
 
         public void FillLists(List<Provider> providers, List<ProductType> types)
@@ -132,31 +102,5 @@ namespace BusinessLogic
             providers = ProviderRepo.Get().ToList();
             types = ProductTypeRepo.Get().ToList();
         }
-
-        public Product GetById(int id)
-        {
-            return ProductRepo.GetById(id);
-        }
-
-        #region IDisposable Support
-        private bool disposedValue = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    Unit.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
     }
 }

@@ -7,41 +7,41 @@ using System.Linq;
 
 namespace BusinessLogic
 {
-    public class BaseCrudLogic<T> : ICrudLogic<T> where T: BaseEntity,new()
+    public class BaseCrudLogic<T,F> : ICrudLogic<T> where T: BaseEntity,new() where F: IRepository<T>
     {
-        internal IRepository<T> Repo;
+        internal F Repo;
         internal IUnitOfWork Unit;
 
-        public BaseCrudLogic(IRepository<T> Repo,IUnitOfWork Unit)
+        public BaseCrudLogic(F Repo,IUnitOfWork Unit)
         {
             this.Repo = Repo;
             this.Unit = Unit;
         }
 
-        public void Add(T Item)
+        public virtual void Add(T Item)
         {
             Repo.Save(Item);
             Unit.SaveChanges();
         }
 
-        public void Delete(T Item)
+        public virtual void Delete(T Item)
         {
             Repo.Delete(Item);
             Unit.SaveChanges();
         }
 
-        public void Edit(T Item)
+        public virtual void Edit(T Item)
         {
             Repo.Update(Item);
             Unit.SaveChanges();
         }
 
-        public List<T> Get()
+        public virtual List<T> Get()
         {
             return Repo.Get().ToList();
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
             return Repo.GetById(id);
         }

@@ -6,6 +6,6 @@ namespace Store.Factories.Interfaces
 {
     public interface ISerialNumbersFormFactory
     {
-        Form CreateNew(List<SerialNumber> seriallist, int count);
+        Form CreateNew(List<SerialNumber> seriallist);
     }
 }

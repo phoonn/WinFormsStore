@@ -13,7 +13,7 @@ namespace Store.ProductForms
     {
         private Product product;
         private List<ProductType> producttypelist;
-        private List<SerialNumber> seriallist = new List<SerialNumber>();
+        private List<SerialNumber> seriallist;
         private List<Provider> providerlist;
         private string defaultcombobox = "---";
         
@@ -74,6 +74,10 @@ namespace Store.ProductForms
                 product.Quantity = quantity;
                 product.ProductTypeName = textBox_type.Text;
                 product.ProviderName = comboBox_providers.SelectedItem.ToString();
+                if (seriallist == null)
+                {
+                    seriallist = new List<SerialNumber>();
+                }
                 DialogResult = DialogResult.OK;
             }
         }
@@ -92,11 +96,11 @@ namespace Store.ProductForms
                 MessageBox.Show("Quantity is 0","Set Quantity",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
                 return;
             }
-            if (count<seriallist.Count)
+            if (seriallist == null)
             {
-                seriallist.RemoveRange(count, seriallist.Count-1);
+                seriallist = new List<SerialNumber>(count);
             }
-            SerialNumbers serialnumsform = new SerialNumbers(seriallist, count);
+            SerialNumbers serialnumsform = new SerialNumbers(seriallist);
             if (serialnumsform.ShowDialog()==DialogResult.OK)
             {
                 textBox_quantity.Text = seriallist.Count.ToString();

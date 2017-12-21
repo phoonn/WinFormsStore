@@ -44,12 +44,11 @@ namespace Store
 
             //Forms
             List<SerialNumber> seriallist = new List<SerialNumber>();
-            int count = 0;
             container.RegisterType<Form, Login>();
             container.RegisterType<Form, OrdersManager>(new InjectionConstructor(new User(),new ResolvedParameter<IOrderLogicFactory>(), new ResolvedParameter<IUserLogicFactory>()));
             container.RegisterType<Form, ManageUsers>();
             container.RegisterType<Form, ProductView>();
-            container.RegisterType<Form, SerialNumbers>(new InjectionConstructor(seriallist,count,new ResolvedParameter<ISerialNumberLogic>()));
+            container.RegisterType<Form, SerialNumbers>(new InjectionConstructor(seriallist,new ResolvedParameter<ISerialNumberLogic>()));
 
             //Factories
             container.RegisterType<IOrdersManagerFactory, OrdersManagerFactory>();

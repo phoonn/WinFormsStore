@@ -5,80 +5,17 @@ using System.Collections.Generic;
 
 namespace BusinessLogic
 {
-    public class UserLogic : IUserLogic
+    public class UserLogic : BaseCrudLogic<User,IUserRepository>, IUserLogic
     {
-        private IUnitOfWork Unit;
-        private IUserRepository UserRepo;
-
-        //public UsersLogic()
-        //{
-        //    DbContext context = new StoreDbContext();
-        //    Unit = new UnitOfWork(context);
-        //    UserRepo = new UserRepository(Unit, context);
-        //}
-
-        public UserLogic(IUnitOfWork Unit, IUserRepository UserRepo)
+        public UserLogic(IUserRepository UserRepo, IUnitOfWork Unit) : base(UserRepo,Unit)
         {
             this.Unit = Unit;
-            this.UserRepo = UserRepo;
-        }
-
-        public List<User> Get()
-        {
-            return UserRepo.GetAll();
+            this.Repo = UserRepo;
         }
 
         public User Login(string name,string password)
         {
-            return UserRepo.Login(name,password);
+            return Repo.Login(name,password);
         }
-
-        public void Add(User user)
-        {
-            UserRepo.Save(user);
-            Unit.SaveChanges();
-        }
-
-        public void Edit(User user)
-        {
-            UserRepo.Update(user);
-            Unit.SaveChanges();
-        }
-
-        public void Delete(User user)
-        {
-            UserRepo.Delete(user);
-            Unit.SaveChanges();
-        }
-
-        public User GetById(int id)
-        {
-            return UserRepo.GetById(id);
-        }
-
-        #region IDisposable Support
-        private bool disposedValue = false; 
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    Unit.Dispose();
-                }
-                
-
-                disposedValue = true;
-            }
-        }
-        
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
-
-
     }
 }

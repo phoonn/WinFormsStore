@@ -4,9 +4,9 @@ using Interfaces.Repositories;
 
 namespace BusinessLogic
 {
-    public class ProductTypeLogic : BaseCrudLogic<ProductType>, IProductTypeLogic
+    public class ProductTypeLogic : BaseCrudLogic<ProductType, IProductTypeRepository>, IProductTypeLogic
     {
-        public ProductTypeLogic(IRepository<ProductType> Repo, IUnitOfWork Unit) : base(Repo, Unit)
+        public ProductTypeLogic(IProductTypeRepository Repo, IUnitOfWork Unit) : base(Repo, Unit)
         {
         }
     }

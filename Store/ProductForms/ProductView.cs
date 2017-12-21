@@ -19,10 +19,12 @@ namespace Store.ProductForms
         private IProviderLogic providerlogic { get; set; }
         private IProductTypeLogic producttypelogic { get; set; }
         private ISerialNumberLogic serialnumberlogic { get; set; }
+
         private readonly IProductLogicFactory productfactory;
         private readonly IProviderLogicFactory providerfactory;
         private readonly IProductTypeLogicFactory producttypefactory;
         private readonly ISerialNumberLogicFactory serialnumberfactory;
+
         private readonly ISerialNumbersFormFactory serialnumberformfactory;
 
         public ProductView(IProductLogicFactory productfactory, IProviderLogicFactory providerfactory, IProductTypeLogicFactory producttypefactory, ISerialNumberLogicFactory serialnumberfactory, ISerialNumbersFormFactory serialnumberformfactory)
@@ -87,7 +89,7 @@ namespace Store.ProductForms
         private void AddProduct_tool_Click(object sender, EventArgs e)
         {
             Product product=new Product();
-            List<SerialNumber> serialist = new List<SerialNumber>();
+            List<SerialNumber> serialist = null;
             AddProduct addproductform = new AddProduct(product,producttypelist,serialist,providerlist);
             if (addproductform.ShowDialog()==DialogResult.OK)
             {
@@ -184,10 +186,19 @@ namespace Store.ProductForms
             {
                 product = productlogic.GetById(product.Id);
                 seriallist = product.SerialNumbers.ToList();
-                Form serialnums = serialnumberformfactory.CreateNew(seriallist, product.Quantity);
+                if (seriallist == null)
+                {
+                    seriallist = new List<SerialNumber>(product.Quantity);
+                }
+                Form serialnums = serialnumberformfactory.CreateNew(seriallist);
                 if (serialnums.ShowDialog()==DialogResult.OK)
                 {
                     productlogic.ModifySerialNumbers(product, seriallist);
+                }
+                else if (seriallist.Count!=product.Quantity)
+                {
+                    product.Quantity = seriallist.Count;
+                    productlogic.Edit(product);
                 }
             }
             RefreshAll();
