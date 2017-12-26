@@ -49,6 +49,7 @@ namespace Store
             container.RegisterType<Form, ManageUsers>();
             container.RegisterType<Form, ProductView>();
             container.RegisterType<Form, SerialNumbers>(new InjectionConstructor(seriallist,new ResolvedParameter<ISerialNumberLogic>()));
+            container.RegisterType<Form, DeleteProvider>();
 
             //Factories
             container.RegisterType<IOrdersManagerFactory, OrdersManagerFactory>();
@@ -61,6 +62,7 @@ namespace Store
             container.RegisterType<IFormFactory, ProductViewFactory>("productview");
             container.RegisterType<IFormFactory, ManageUsersFactory>("manageusers");
             container.RegisterType<ISerialNumbersFormFactory, SerialNumbersFormFactory>();
+            container.RegisterType<IFormFactory, ProviderViewFormFactory>();
 
             //container 
             container.RegisterInstance<IUnityContainer>(container);

@@ -1,5 +1,4 @@
 ﻿using Interfaces.Logic;
-using DataAccess.Repositories;
 using ErrorAndValidation;
 using System;
 using System.Collections.Generic;
@@ -26,8 +25,10 @@ namespace Store.ProductForms
         private readonly ISerialNumberLogicFactory serialnumberfactory;
 
         private readonly ISerialNumbersFormFactory serialnumberformfactory;
+        private readonly IFormFactory deleteproviderfactory;
 
-        public ProductView(IProductLogicFactory productfactory, IProviderLogicFactory providerfactory, IProductTypeLogicFactory producttypefactory, ISerialNumberLogicFactory serialnumberfactory, ISerialNumbersFormFactory serialnumberformfactory)
+        public ProductView(IProductLogicFactory productfactory, IProviderLogicFactory providerfactory, IProductTypeLogicFactory producttypefactory,
+            ISerialNumberLogicFactory serialnumberfactory, ISerialNumbersFormFactory serialnumberformfactory, IFormFactory deleteproviderfactory)
         {
             InitializeComponent();
             this.productfactory = productfactory;
@@ -35,6 +36,7 @@ namespace Store.ProductForms
             this.producttypefactory = producttypefactory;
             this.serialnumberfactory = serialnumberfactory;
             this.serialnumberformfactory = serialnumberformfactory;
+            this.deleteproviderfactory = deleteproviderfactory;
             RefreshAll(true);
         }
 
@@ -170,7 +172,7 @@ namespace Store.ProductForms
 
         private void deleteprovider_tool_Click(object sender, EventArgs e)
         {
-            DeleteProvider deleteprov = new DeleteProvider();
+            Form deleteprov = deleteproviderfactory.CreateNew();
             deleteprov.Show();
         }
 

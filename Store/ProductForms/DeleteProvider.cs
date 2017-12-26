@@ -1,9 +1,7 @@
-﻿using DataAccess.Repositories;
-using DataModel.Entities;
+﻿using DataModel.Entities;
+using Interfaces.Logic;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Store.ProductForms
@@ -11,29 +9,19 @@ namespace Store.ProductForms
     public partial class DeleteProvider : Form
     {
         private BindingSource providerBS = new BindingSource();
-        private List<Provider> providerlist;
-        public DeleteProvider()
+        private readonly IProviderLogic providerlogic;
+        public DeleteProvider(IProviderLogic providerlogic)
         {
+            this.providerlogic = providerlogic;
             InitializeComponent();
             RefreshAll();
         }
 
         private void RefreshAll()
         {
-            using (StoreDbContext context =new StoreDbContext())
-            {
-                ProviderRepository providerrepo = new ProviderRepository(context);
-                providerlist = providerrepo.GetAll();
-                providerBS.DataSource = from p in providerlist
-                                       select new { p.Id,p.ProviderName };
-            }
+            providerBS.DataSource = providerlogic.Get();
             datagrid_provider.DataSource = providerBS;
             datagrid_provider.MultiSelect = false;
-            if (providerBS.Count > 1)
-            {
-                datagrid_provider.Columns[1].HeaderText = "Доставчик";
-                datagrid_provider.Columns["Id"].Visible = false;
-            }
         }
 
         private void button_delete_Click(object sender, EventArgs e)
@@ -42,17 +30,12 @@ namespace Store.ProductForms
             {
                 return;
             }
-            int index = datagrid_provider.CurrentRow.Index;
-            Provider item = providerlist[index];
+            Provider item = (Provider)providerBS.Current;
             if (MessageBox.Show("Do you want to delete this provider ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                using (StoreDbContext context=new StoreDbContext())
-                {
-                    ProviderRepository providerrepo = new ProviderRepository(context);
-                    providerrepo.Delete(item);
-                    providerBS.Remove(item);
-                    datagrid_provider.Refresh();
-                }
+                providerlogic.Delete(item);
+                providerBS.Remove(item);
+                datagrid_provider.Refresh();
             }
         }
     }

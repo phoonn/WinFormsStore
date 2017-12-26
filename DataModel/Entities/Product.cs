@@ -7,6 +7,9 @@ namespace DataModel.Entities
 {
     public class Product : BaseEntity
     {
+        [Key, Browsable(false), Column(TypeName = "int")]
+        public override int Id { get; set; }
+
         [DisplayName("Номер"),Column(Order=2),Index(IsUnique =true),MaxLength(100)]
         public string Number { get; set; }
         

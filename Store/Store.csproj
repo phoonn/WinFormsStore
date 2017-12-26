@@ -141,6 +141,7 @@
     <Compile Include="Factories\ProductTypeLogicFactory.cs" />
     <Compile Include="Factories\ProductViewFactory.cs" />
     <Compile Include="Factories\ProviderLogicFactory.cs" />
+    <Compile Include="Factories\ProviderViewFormFactory.cs" />
     <Compile Include="Factories\SerialNumberLogicFactory.cs" />
     <Compile Include="Factories\SerialNumbersFormFactory.cs" />
     <Compile Include="Factories\UserLogicFactory.cs" />

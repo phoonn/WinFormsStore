@@ -7,10 +7,7 @@ namespace Store
 {
     public partial class ChangeUser : Form
     {
-        private IUserLogic logic;
         private User usertologin;
-
-
         public ChangeUser(User usertologin)
         {
             InitializeComponent();
