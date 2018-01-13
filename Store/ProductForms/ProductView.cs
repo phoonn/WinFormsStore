@@ -195,7 +195,7 @@ namespace Store.ProductForms
                 Form serialnums = serialnumberformfactory.CreateNew(seriallist);
                 if (serialnums.ShowDialog()==DialogResult.OK)
                 {
-                    productlogic.ModifySerialNumbers(product, seriallist);
+                    productlogic.EditSerialNumbers(product, seriallist);
                 }
                 else if (seriallist.Count!=product.Quantity)
                 {

@@ -11,6 +11,6 @@ namespace Interfaces.Logic
 
         void Update(Product Item, List<SerialNumber> serialnums);
 
-        void ModifySerialNumbers(Product Item, List<SerialNumber> serialnum);
+        void EditSerialNumbers(Product Item, List<SerialNumber> serialnum);
     }
 }

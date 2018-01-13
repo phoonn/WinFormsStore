@@ -46,7 +46,7 @@ namespace BusinessLogic
             Unit.SaveChanges();
         }
 
-        public void Update(Product Item, List<SerialNumber> serialnums)
+        public void Update(Product Item, List<SerialNumber> serialnumbers)
         {
             Item.ProductType = ProductTypeRepo.FindByName(Item.ProductTypeName);
             if (Item.ProductType == null)
@@ -55,7 +55,31 @@ namespace BusinessLogic
                 Item.ProductType.Type = Item.ProductTypeName;
             }
             Item.Provider = ProviderRepo.FindByName(Item.ProviderName);
-            foreach (var number in serialnums)
+
+            ModifySerialNumbers(Item, serialnumbers);
+
+            Item.SerialNumbers = serialnumbers;
+            Repo.Update(Item);
+            Unit.SaveChanges();
+        }
+
+        public void EditSerialNumbers(Product Item, List<SerialNumber> serialnumbers)
+        {
+            ModifySerialNumbers(Item, serialnumbers);
+            Item.Quantity = serialnumbers.Count;
+            Repo.Update(Item);
+            Unit.SaveChanges();
+        }
+
+        public void FillLists(List<Provider> providers, List<ProductType> types)
+        {
+            providers = ProviderRepo.Get().ToList();
+            types = ProductTypeRepo.Get().ToList();
+        }
+        
+        private void ModifySerialNumbers(Product Item, List<SerialNumber> serialnumbers)
+        {
+            foreach (var number in serialnumbers)
             {
                 if (number.Id != 0)
                 {
@@ -70,37 +94,6 @@ namespace BusinessLogic
                     SerianNumberRepo.Save(number);
                 }
             }
-            Item.SerialNumbers = serialnums;
-            Repo.Update(Item);
-            Unit.SaveChanges();
-        }
-
-        public void ModifySerialNumbers(Product Item, List<SerialNumber> serialnumbers)
-        {
-            foreach (var number in serialnumbers)
-            {
-                if (number.Id!=0)
-                {
-                    if (number.Modified)
-                    {
-                        SerianNumberRepo.Update(number);
-                    }
-                }
-                else
-                {
-                    number.ProductId = Item.Id;
-                    SerianNumberRepo.Save(number);
-                }
-            }
-            Item.Quantity = serialnumbers.Count;
-            Repo.Update(Item);
-            Unit.SaveChanges();
-        }
-
-        public void FillLists(List<Provider> providers, List<ProductType> types)
-        {
-            providers = ProviderRepo.Get().ToList();
-            types = ProductTypeRepo.Get().ToList();
         }
     }
 }

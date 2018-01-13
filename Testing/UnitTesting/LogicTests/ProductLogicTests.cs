@@ -53,7 +53,7 @@ namespace Testing.UnitTesting.LogicTests
         }
         
         [Test]
-        public void ModiftSerialNumbers_ModifiedNumbers_UpdateCalled()
+        public void EditSerialNumbers_ModifiedNumbers_UpdateCalled()
         {
             //Arrange
             Product product = new Product
@@ -80,10 +80,43 @@ namespace Testing.UnitTesting.LogicTests
             ProductLogic logictesting = new ProductLogic(StubProductRepo, StubUnit, StubProviderRepo, StubProductTypeRepo, MockSerialNumberRepo);
 
             //Act
-            logictesting.ModifySerialNumbers(product, serialnums);
+            logictesting.EditSerialNumbers(product, serialnums);
 
             //Assert
             MockSerialNumberRepo.Received(2).Update(Arg.Any<SerialNumber>());
+        }
+
+        [Test]
+        public void EditSerialNumbers_SaveSerial_SaveCalled()
+        {
+            //Arrange
+            Product product = new Product
+            {
+                Number = "10",
+                ProductName = "Asus",
+                ProductTypeId = 0,
+                Quantity = 10,
+                PricePaid = 200,
+                PriceWithoutVat = 180,
+                Price = 220,
+                Provider = null,
+                ProductTypeName = "laptop",
+                ProductType = null
+            };
+            List<SerialNumber> serialnums = new List<SerialNumber> {
+                new SerialNumber { SerialNum = "123456789", Modified = true },
+                new SerialNumber { Id=3,SerialNum = "45313231", Modified = false } ,
+                new SerialNumber { Id=4,SerialNum = "4531313124", Modified = true } };
+            product.SerialNumbers = serialnums;
+
+            ISerialNumberRepository MockSerialNumberRepo = Substitute.For<ISerialNumberRepository>();
+
+            ProductLogic logictesting = new ProductLogic(StubProductRepo, StubUnit, StubProviderRepo, StubProductTypeRepo, MockSerialNumberRepo);
+            //Act
+            logictesting.EditSerialNumbers(product, serialnums);
+
+            //Assert
+            MockSerialNumberRepo.Received().Save(Arg.Is<SerialNumber>(s=>(s.SerialNum==serialnums[0].SerialNum && s.ProductId==product.Id)));
         }
     }
 }
